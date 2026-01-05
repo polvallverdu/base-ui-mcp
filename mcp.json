@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "base-ui-mcp": {
+      "command": "bun",
+      "args": ["run", "dev:stdio"],
+      "env": {
+        "MCP_LOG_LEVEL": "debug"
+      }
+    }
+  }
+}
