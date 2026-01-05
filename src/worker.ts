@@ -32,6 +32,11 @@ export interface CloudflareBindings {
   OTEL_EXPORTER_OTLP_TRACES_ENDPOINT?: string;
   OTEL_EXPORTER_OTLP_METRICS_ENDPOINT?: string;
 
+  // Rate limiter binding (configured in wrangler.toml)
+  MCP_RATE_LIMITER?: {
+    limit: (options: { key: string }) => Promise<{ success: boolean }>;
+  };
+
   // Allow additional string-based bindings
   [key: string]: unknown;
 }

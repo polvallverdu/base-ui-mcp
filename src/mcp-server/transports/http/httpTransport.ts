@@ -96,6 +96,61 @@ export function createHttpApp<TBindings extends object = HonoNodeBindings>(
   // Centralized error handling
   app.onError(httpErrorHandler);
 
+  // Cloudflare Rate Limiting middleware for MCP endpoint
+  // Only applies when running in Cloudflare Workers with rate limiter binding
+  app.use(config.mcpHttpEndpointPath, async (c, next) => {
+    // Check if rate limiter binding is available (Cloudflare Workers only)
+    const env = c.env as {
+      MCP_RATE_LIMITER?: {
+        limit: (options: { key: string }) => Promise<{ success: boolean }>;
+      };
+    };
+
+    if (env.MCP_RATE_LIMITER) {
+      // Use client IP as the rate limit key
+      // cf-connecting-ip is the original client IP provided by Cloudflare
+      const clientIp =
+        c.req.header('cf-connecting-ip') ??
+        c.req.header('x-forwarded-for')?.split(',')[0]?.trim() ??
+        'unknown';
+
+      try {
+        const { success } = await env.MCP_RATE_LIMITER.limit({ key: clientIp });
+
+        if (!success) {
+          logger.warning('Rate limit exceeded for MCP request', {
+            ...transportContext,
+            clientIp,
+            path: c.req.path,
+            method: c.req.method,
+          });
+
+          return c.json(
+            {
+              jsonrpc: '2.0',
+              error: {
+                code: -32000,
+                message:
+                  'Rate limit exceeded. Please try again later. To avoid rate limits, run the MCP server locally using the npm package.',
+              },
+              id: null,
+            },
+            429,
+          );
+        }
+      } catch (err) {
+        // Log rate limiter errors but don't block the request
+        logger.warning('Rate limiter error, allowing request', {
+          ...transportContext,
+          clientIp,
+          error: err instanceof Error ? err.message : String(err),
+        });
+      }
+    }
+
+    return await next();
+  });
+
   // MCP Spec 2025-06-18: Origin header validation for DNS rebinding protection
   // https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#security-warning
   app.use(config.mcpHttpEndpointPath, async (c, next) => {
