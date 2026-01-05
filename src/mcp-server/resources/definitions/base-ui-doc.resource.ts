@@ -90,9 +90,9 @@ async function baseUiDocLogic(
   params: BaseUiDocParams,
   context: RequestContext,
 ): Promise<BaseUiDocOutput> {
-  // Extract path from URI or params
-  const pathFromUri = uri.hostname || uri.pathname.replace(/^\/+/, '');
-  const pathToFetch = params.path || pathFromUri;
+  // The path comes from the URI template {+path} which captures the full path
+  // e.g., base-ui://react/components/toast.md -> path = "react/components/toast.md"
+  const pathToFetch = params.path;
 
   if (!pathToFetch) {
     throw new McpError(
@@ -226,7 +226,7 @@ export const baseUiDocResourceDefinition: ResourceDefinition<
   title: 'Base UI Documentation',
   description:
     'A dynamic resource that provides access to Base UI documentation pages. Use a path identifier (e.g., "react/components/accordion.md") to fetch specific documentation.',
-  uriTemplate: 'base-ui://{path}',
+  uriTemplate: 'base-ui://{+path}',
   paramsSchema: ParamsSchema,
   outputSchema: OutputSchema,
   mimeType: 'text/markdown',

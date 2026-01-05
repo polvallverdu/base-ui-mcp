@@ -33,7 +33,7 @@ describe('baseUiDocResourceDefinition', () => {
   });
 
   it('should have correct metadata', () => {
-    expect(baseUiDocResourceDefinition.uriTemplate).toBe('base-ui://{path}');
+    expect(baseUiDocResourceDefinition.uriTemplate).toBe('base-ui://{+path}');
     expect(baseUiDocResourceDefinition.mimeType).toBe('text/markdown');
     expect(baseUiDocResourceDefinition.annotations).toEqual({
       readOnlyHint: true,
@@ -91,16 +91,7 @@ describe('baseUiDocResourceDefinition', () => {
     expect(fetchSpy).toHaveBeenCalled();
   });
 
-  it('should extract path from URI when not provided in params', async () => {
-    const mockContent =
-      '# Button Component\n\nThis is the button documentation.';
-    const mockResponse = new Response(mockContent, {
-      status: 200,
-      headers: { 'Content-Type': 'text/markdown' },
-    });
-
-    fetchSpy.mockResolvedValue(mockResponse);
-
+  it('should throw error when path param is empty', async () => {
     const uri = new URL('base-ui://react/components/button.md');
     const rawParams = {};
     const parsedParams =
@@ -109,23 +100,16 @@ describe('baseUiDocResourceDefinition', () => {
       operation: 'test',
     });
 
-    const result = await baseUiDocResourceDefinition.logic(
-      uri,
-      parsedParams,
-      context,
-    );
-
-    const typedResult = result as z.infer<
-      typeof baseUiDocResourceDefinition.outputSchema
-    >;
-
-    expect(typedResult.path).toBe('react/components/button.md');
-    expect(typedResult.content).toBe(mockContent);
+    // With {+path} template, the path is always extracted from the URI and passed as params.path
+    // This test verifies the error handling when path is somehow missing
+    await expect(
+      baseUiDocResourceDefinition.logic(uri, parsedParams, context),
+    ).rejects.toThrow(McpError);
   });
 
-  it('should throw error when path is missing from both URI and params', async () => {
+  it('should throw error when path is empty string', async () => {
     const uri = new URL('base-ui://');
-    const rawParams = {};
+    const rawParams = { path: '' };
     const parsedParams =
       baseUiDocResourceDefinition.paramsSchema.parse(rawParams);
     const context = requestContextService.createRequestContext({

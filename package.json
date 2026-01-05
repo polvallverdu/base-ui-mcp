@@ -1,7 +1,7 @@
 {
   "name": "base-ui-mcp",
   "version": "1.0.0",
-  "mcpName": "base-ui-mcp",
+  "mcpName": "io.github.polvallverdu/base-ui-mcp",
   "description": "base-ui MCP server for easy access to base-ui documentation",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -9,7 +9,7 @@
     "dist"
   ],
   "bin": {
-    "mcp-ts-template": "dist/index.js"
+    "base-ui-mcp": "dist/index.js"
   },
   "exports": {
     ".": {
@@ -52,7 +52,7 @@
     "fetch-spec": "bun run scripts/fetch-openapi-spec.ts",
     "format": "bunx prettier --write \"**/*.{ts,js,json,md,html,css}\"",
     "prepare": "bunx husky",
-    "inspector": "bunx mcp-inspector --config mcp.json --server mcp-ts-template",
+    "inspector": "bunx @modelcontextprotocol/inspector --config mcp.json --server base-ui-mcp",
     "test": "bunx vitest run",
     "test:coverage": "bunx vitest run --coverage",
     "coverage:update": "bun run scripts/update-coverage.ts",
@@ -135,41 +135,18 @@
     "zod": "^3.23.8"
   },
   "keywords": [
-    "agent",
-    "ai",
-    "ai-agent",
-    "authentication",
-    "cloudflare-workers",
-    "declarative-tools",
-    "dependency-injection",
-    "error-handling",
-    "hono",
-    "llm-integration",
+    "base-ui",
+    "documentation",
     "mcp",
     "model-context-protocol",
     "mcp-server",
-    "elicitation",
-    "observability",
-    "opentelemetry",
-    "otel",
-    "server-template",
-    "template",
-    "typescript",
-    "zod"
+    "ai",
+    "llm",
+    "typescript"
   ],
-  "author": "cyanheads <casey@caseyjhand.com> (https://github.com/cyanheads/mcp-ts-template#readme)",
+  "author": "polvallverdu (https://github.com/polvallverdu)",
   "license": "Apache-2.0",
-  "funding": [
-    {
-      "type": "github",
-      "url": "https://github.com/sponsors/cyanheads"
-    },
-    {
-      "type": "buy_me_a_coffee",
-      "url": "https://www.buymeacoffee.com/cyanheads"
-    }
-  ],
-  "packageManager": "bun@1.2.21",
+  "packageManager": "bun@1.3.4",
   "engines": {
     "bun": ">=1.2.0",
     "node": ">=20.0.0"
@@ -178,7 +155,7 @@
     "ignores": [
       "bun",
       "repomix",
-      "mcp-ts-template"
+      "base-ui-mcp"
     ]
   },
   "publishConfig": {
