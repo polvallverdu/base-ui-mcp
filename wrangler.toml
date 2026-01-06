@@ -38,7 +38,7 @@ STORAGE_PROVIDER_TYPE = "in-memory"  # Options: "in-memory", "cloudflare-kv", "c
 [[ratelimits]]
 name = "MCP_RATE_LIMITER"
 namespace_id = "1001"
-simple = { limit = 50, period = 60 }
+simple = { limit = 20, period = 60 }
 
 # --- SERVICE BINDINGS ---
 # Uncomment and configure the bindings you need for your MCP server.
