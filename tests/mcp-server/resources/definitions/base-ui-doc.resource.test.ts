@@ -8,7 +8,6 @@ import { baseUiDocResourceDefinition } from '../../../../src/mcp-server/resource
 import { requestContextService } from '../../../../src/utils/index.js';
 import { z } from 'zod';
 import {
-  JsonRpcErrorCode,
   McpError,
 } from '../../../../src/types-global/errors.js';
 
@@ -39,10 +38,14 @@ describe('baseUiDocResourceDefinition', () => {
       readOnlyHint: true,
       openWorldHint: true,
     });
-    expect(baseUiDocResourceDefinition.examples).toHaveLength(1);
+    expect(baseUiDocResourceDefinition.examples).toHaveLength(2);
     expect(baseUiDocResourceDefinition.examples?.[0]).toEqual({
       name: 'Accordion Component',
       uri: 'base-ui://react/components/accordion.md',
+    });
+    expect(baseUiDocResourceDefinition.examples?.[1]).toEqual({
+      name: 'Latest Release Notes',
+      uri: 'base-ui://react/overview/releases/v1-2-0.md',
     });
   });
 
@@ -197,7 +200,7 @@ describe('baseUiDocResourceDefinition', () => {
     const mockIndexContent = `# Base UI Documentation
 
 - [Accordion](https://base-ui.com/react/components/accordion.md)
-- [Button](https://base-ui.com/react/components/button.md)
+- [v1.2.0](https://base-ui.com/react/overview/releases/v1-2-0.md)
 - [Input](https://base-ui.com/react/components/input.md)
 `;
 
@@ -222,9 +225,9 @@ describe('baseUiDocResourceDefinition', () => {
       description: 'Base UI documentation: Accordion',
     });
     expect(resourceList.resources[1]).toEqual({
-      uri: 'base-ui://react/components/button.md',
-      name: 'Button',
-      description: 'Base UI documentation: Button',
+      uri: 'base-ui://react/overview/releases/v1-2-0.md',
+      name: 'v1.2.0',
+      description: 'Base UI documentation: v1.2.0',
     });
     expect(resourceList.resources[2]).toEqual({
       uri: 'base-ui://react/components/input.md',
