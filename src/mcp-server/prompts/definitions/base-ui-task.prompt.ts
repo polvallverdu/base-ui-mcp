@@ -44,7 +44,7 @@ This MCP server provides the following tools for accessing Base UI documentation
 Call: base_ui_list_docs with no parameters
 Result: A list of documentation entries like:
 - [Accordion](react/components/accordion.md)
-- [Button](react/components/button.md)
+- [v1.2.0](react/overview/releases/v1-2-0.md)
 - etc.
 \`\`\`
 
@@ -52,14 +52,14 @@ Result: A list of documentation entries like:
 **Purpose**: Fetches a specific Base UI documentation page by path identifier.
 
 **Usage**:
-- **Required parameter**: \`path\` - The documentation path identifier (e.g., "react/components/accordion.md")
+- **Required parameter**: \`path\` - The documentation path identifier (e.g., "react/overview/releases/v1-2-0.md")
 - The path should come from the list-docs tool output
 - Returns the full markdown content of the documentation page
 
 **Example**:
 \`\`\`
-Call: base_ui_get_doc with path: "react/components/accordion.md"
-Result: The complete markdown documentation for the Accordion component
+Call: base_ui_get_doc with path: "react/overview/releases/v1-2-0.md"
+Result: The complete markdown documentation for the Base UI v1.2.0 release notes
 \`\`\`
 
 **Best Practice**: Always use \`base_ui_list_docs\` first to discover available documentation, then use \`base_ui_get_doc\` to fetch specific pages.`;
@@ -78,7 +78,7 @@ Result: The complete markdown documentation for the Accordion component
 
 **Example URIs**:
 - \`base-ui://react/components/accordion.md\` - Accordion component documentation
-- \`base-ui://react/components/button.md\` - Button component documentation
+- \`base-ui://react/overview/releases/v1-2-0.md\` - Base UI v1.2.0 release notes
 
 **Resource Discovery**:
 - Use the \`list\` operation to discover all available documentation resources
@@ -98,14 +98,14 @@ Tool: base_ui_list_docs
 **Step 2**: Choose a specific page and fetch it
 \`\`\`
 Tool: base_ui_get_doc
-Parameters: { "path": "react/components/accordion.md" }
+Parameters: { "path": "react/overview/releases/v1-2-0.md" }
 \`\`\`
 
 ### Example 2: Using Resources
 
 **Direct URI Access**:
 \`\`\`
-Resource: base-ui://react/components/accordion.md
+Resource: base-ui://react/overview/releases/v1-2-0.md
 \`\`\`
 
 **List All Resources**:

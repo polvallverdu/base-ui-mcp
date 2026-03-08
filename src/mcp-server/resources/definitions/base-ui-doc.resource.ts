@@ -235,6 +235,10 @@ export const baseUiDocResourceDefinition: ResourceDefinition<
       name: 'Accordion Component',
       uri: 'base-ui://react/components/accordion.md',
     },
+    {
+      name: 'Latest Release Notes',
+      uri: 'base-ui://react/overview/releases/v1-2-0.md',
+    },
   ],
   annotations: { readOnlyHint: true, openWorldHint: true },
   list: async (_extra) => {

@@ -7,6 +7,18 @@ For changelog details from version 2.0.1 to 2.3.0, please refer to the [changelo
 
 ---
 
+## [Unreleased]
+
+### Documentation
+
+- **Base UI Docs Refresh**: Updated project guidance and discovery coverage to reflect the live Base UI docs index, including the `v1.2.0` release notes published on February 12, 2026.
+  - Added local setup instructions and a live docs reference in [README.md](README.md).
+  - Added a `v1.2.0` resource example in [src/mcp-server/resources/definitions/base-ui-doc.resource.ts](src/mcp-server/resources/definitions/base-ui-doc.resource.ts).
+  - Updated MCP prompt examples to use the current release notes path in [src/mcp-server/prompts/definitions/base-ui-task.prompt.ts](src/mcp-server/prompts/definitions/base-ui-task.prompt.ts).
+  - Updated resource and prompt tests to validate the `v1.2.0` docs entry in [tests/mcp-server/resources/definitions/base-ui-doc.resource.test.ts](tests/mcp-server/resources/definitions/base-ui-doc.resource.test.ts) and [tests/mcp-server/prompts/definitions/base-ui-task.prompt.test.ts](tests/mcp-server/prompts/definitions/base-ui-task.prompt.test.ts).
+
+---
+
 ## [2.5.7] - 2025-10-27
 
 ### Changed
