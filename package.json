@@ -1,12 +1,14 @@
 {
-  "name": "base-ui-mcp",
+  "name": "@polvallverdu/base-ui-mcp",
   "version": "1.0.0",
   "mcpName": "io.github.polvallverdu/base-ui-mcp",
-  "description": "base-ui MCP server for easy access to base-ui documentation",
+  "description": "MCP server that gives AI assistants context about Base UI (base-ui.com).",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE"
   ],
   "bin": {
     "base-ui-mcp": "dist/index.js"
@@ -29,8 +31,8 @@
   },
   "homepage": "https://github.com/polvallverdu/base-ui-mcp#readme",
   "scripts": {
-    "build": "bun build ./src/index.ts --outdir ./dist --target node --external pino --external pino-pretty",
-    "build:worker": "bun build ./src/worker.ts --outdir ./dist --target bun --no-external",
+    "build": "bun build ./src/index.ts --outdir ./dist --target node --minify",
+    "build:worker": "bun build ./src/worker.ts --outdir ./dist/worker --target bun --no-external",
     "deploy:dev": "MCP_TRANSPORT_TYPE=http bunx wrangler dev",
     "deploy:prod": "MCP_TRANSPORT_TYPE=http bunx wrangler deploy",
     "start": "bun ./dist/index.js",
@@ -51,7 +53,6 @@
     "tree": "bun run scripts/tree.ts",
     "fetch-spec": "bun run scripts/fetch-openapi-spec.ts",
     "format": "bunx prettier --write \"**/*.{ts,js,json,md,html,css}\"",
-    "prepare": "bunx husky",
     "inspector": "bunx @modelcontextprotocol/inspector --config mcp.json --server base-ui-mcp",
     "test": "bunx vitest run",
     "test:coverage": "bunx vitest run --coverage",
@@ -59,7 +60,8 @@
     "coverage:commit": "bun run scripts/update-coverage.ts --commit",
     "audit": "bun audit",
     "audit:fix": "bun audit --fix",
-    "publish-mcp": "bun scripts/validate-mcp-publish-schema.ts"
+    "publish-mcp": "bun scripts/validate-mcp-publish-schema.ts",
+    "prepublishOnly": "bun run rebuild"
   },
   "resolutions": {
     "@hono/node-server": "1.19.5",
@@ -155,7 +157,7 @@
     "ignores": [
       "bun",
       "repomix",
-      "base-ui-mcp"
+      "@polvallverdu/base-ui-mcp"
     ]
   },
   "publishConfig": {

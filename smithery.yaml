@@ -19,7 +19,7 @@ startCommand:
   commandFunction: |
     (config) => ({
       "command": "bunx",
-      "args": ["base-ui-mcp"],
+      "args": ["@polvallverdu/base-ui-mcp"],
       "env": {
         "MCP_TRANSPORT_TYPE": config.MCP_TRANSPORT_TYPE,
         "MCP_HTTP_PORT": config.MCP_HTTP_PORT,
